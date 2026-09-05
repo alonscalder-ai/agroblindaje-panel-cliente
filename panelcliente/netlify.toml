@@ -1,1 +1,41 @@
+# Panel del Cliente · Agroblindaje Inteligente™ · SSCAE
+# Proyecto Netlify SEPARADO del sitio comercial (decisión §15.1)
 
+[build]
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "20"   # obligatorio: las funciones usan fetch global (Node 18+)
+
+[functions]
+  directory = "netlify/functions"
+
+# La alerta diaria corre a las 13:00 UTC = 07:00 en Querétaro
+[functions."alertas-diarias"]
+  schedule = "0 13 * * *"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' https://v5.airtableusercontent.com data:; style-src 'self'; script-src 'self'; connect-src 'self'"
+
+# ─── Variables de entorno requeridas (configurar en Netlify UI, NUNCA aquí) ───
+#  AIRTABLE_TOKEN            PAT con alcance data.records:read + data.records:write
+#                            SOLO sobre las tablas Usuarios de Panel y Operaciones
+#                            (write se usa únicamente para código OTP, intentos y bitácora de alertas)
+#  AIRTABLE_BASE_ID          app9YewbU1P5QoQdM
+#  SESION_SECRET             cadena aleatoria de 64+ caracteres
+#  ZAPIER_OTP_WEBHOOK_URL    webhook del Zap "Envío de código de acceso"
+#  ZAPIER_WEBHOOK_SECRET     secreto compartido con Zapier
+#  WHATSAPP_TOKEN            token de Cloud API (para alertas-diarias, sin BSP)
+#  WHATSAPP_PHONE_ID         id del número emisor en Cloud API
+#  UTILIDADES_SECRET         secreto para /api/numero-a-letras (lo llama Zapier)

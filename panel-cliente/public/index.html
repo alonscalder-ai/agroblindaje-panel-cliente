@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Acceso · Panel de operaciones</title>
+<link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+
+<div class="acceso">
+  <div class="sello">Agroblindaje Inteligente&trade;</div>
+  <div class="sub">Panel de operaciones &middot; SSCAE</div>
+
+  <form id="paso1">
+    <label for="contacto">Tu WhatsApp o correo registrado</label>
+    <input id="contacto" name="contacto" type="text" inputmode="email"
+           autocomplete="username" placeholder="442 123 4567" required>
+    <button class="principal" type="submit">Enviarme el c&oacute;digo</button>
+  </form>
+
+  <form id="paso2" class="oculto">
+    <label for="codigo">C&oacute;digo de 6 d&iacute;gitos que recibiste</label>
+    <input id="codigo" name="codigo" type="text" inputmode="numeric"
+           autocomplete="one-time-code" maxlength="6" pattern="\d{6}" required>
+    <button class="principal" type="submit">Entrar</button>
+    <button type="button" id="reenviar"
+            style="background:none;border:none;color:var(--verde-claro);margin-top:12px;font-size:14px;">
+      Usar otro n&uacute;mero o pedir otro c&oacute;digo
+    </button>
+  </form>
+
+  <p class="mensaje" id="mensaje" role="status" aria-live="polite"></p>
+
+  <p class="pie-despacho">El c&oacute;digo vence en 10 minutos y sirve una sola vez.</p>
+</div>
+
+<script src="/acceso.js"></script>
+</body>
+</html>

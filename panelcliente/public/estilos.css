@@ -1,0 +1,182 @@
+/* Panel del Cliente · SSCAE — móvil primero (360 px), legible bajo sol directo.
+   Contraste alto deliberado: fondo blanco puro, tinta #1F2A22.
+   El color del semáforo NUNCA viaja solo: siempre con etiqueta de texto. */
+
+:root {
+  --verde: #1B3828;
+  --verde-claro: #2D5C41;
+  --dorado: #C49A12;
+  --tinta: #1F2A22;
+  --gris: #5C6B60;
+  --borde: #D8D4C4;
+  --crema: #F6F4EE;
+  --ok: #2E7D46;
+  --ambar: #8A6200;
+  --rojo: #B3261E;
+  --morado: #6B4FA3;
+  --liquidada: #5C6B60;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px; line-height: 1.45; color: var(--tinta); background: #FFFFFF;
+}
+button { font: inherit; cursor: pointer; }
+a { color: var(--verde-claro); }
+
+/* ── Cabecera ── */
+header {
+  background: var(--verde); color: #FFFFFF;
+  padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 10;
+}
+header img.logo { height: 28px; max-width: 120px; object-fit: contain; background: #FFF; border-radius: 3px; padding: 2px 4px; }
+header .nombre-cliente { font-weight: 700; font-size: 15px; flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+header .usuario { font-size: 12px; opacity: .85; text-align: right; line-height: 1.2; }
+
+/* ── Aviso de modo histórico (§4.4) ── */
+.aviso-historico {
+  background: #4A3800; color: #FFF; font-size: 13.5px;
+  padding: 8px 16px; text-align: center;
+}
+.aviso-historico a { color: #FFD766; }
+
+/* ── Contenido ── */
+main { padding: 14px 14px 84px 14px; max-width: 560px; margin: 0 auto; }
+h2 { font-size: 17px; color: var(--verde); margin: 4px 0 10px; }
+.oculto { display: none !important; }
+
+/* ── Resumen (P-1) ── */
+.saldo-principal { text-align: center; padding: 14px 0 4px; }
+.saldo-principal .cifra {
+  font-size: 40px; font-weight: 800; color: var(--dorado);
+  font-variant-numeric: tabular-nums; letter-spacing: -1px;
+}
+.saldo-principal .que-es { font-size: 13.5px; color: var(--gris); }
+
+.indicadores { display: table; width: 100%; border-collapse: separate; border-spacing: 8px 8px; margin: 6px -8px; }
+.fila-ind { display: table-row; }
+.ind {
+  display: table-cell; width: 50%; background: var(--crema);
+  border: 1px solid var(--borde); border-radius: 8px; padding: 10px 12px;
+}
+.ind .valor { font-size: 21px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.ind .nombre { font-size: 12.5px; color: var(--gris); }
+.ind.alerta .valor { color: var(--rojo); }
+.ind.atencion .valor { color: var(--ambar); }
+.ind[role="button"] { cursor: pointer; }
+.ind:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 3px solid var(--dorado); outline-offset: 1px;
+}
+
+.accesos { display: flex; gap: 8px; margin-top: 8px; }
+.accesos button {
+  flex: 1; padding: 11px 6px; border: 1.5px solid var(--verde);
+  background: #FFF; color: var(--verde); border-radius: 8px; font-weight: 700; font-size: 14px;
+}
+
+/* ── Listado (P-2): tarjetas con barra de semáforo ── */
+.controles { display: flex; gap: 8px; margin-bottom: 10px; }
+.controles input[type="search"] {
+  flex: 1; padding: 10px 12px; border: 1.5px solid var(--borde); border-radius: 8px; font-size: 15px;
+}
+.controles select { padding: 10px 8px; border: 1.5px solid var(--borde); border-radius: 8px; font-size: 14px; background: #FFF; }
+
+.tarjeta {
+  display: block; width: 100%; text-align: left; background: #FFF;
+  border: 1px solid var(--borde); border-left: 6px solid var(--gris);
+  border-radius: 8px; padding: 11px 12px; margin-bottom: 9px;
+}
+.tarjeta[data-sem="vigente"]   { border-left-color: var(--ok); }
+.tarjeta[data-sem="porvencer"] { border-left-color: var(--ambar); }
+.tarjeta[data-sem="vencida"]   { border-left-color: var(--rojo); }
+.tarjeta[data-sem="disputa"]   { border-left-color: var(--morado); }
+.tarjeta[data-sem="liquidada"] { border-left-color: var(--liquidada); opacity: .75; }
+
+.tarjeta .linea1 { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.tarjeta .contraparte { font-weight: 700; font-size: 15px; }
+.tarjeta .saldo { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tarjeta .linea2 { display: flex; justify-content: space-between; gap: 8px; margin-top: 3px;
+  font-size: 13px; color: var(--gris); }
+.etiqueta-sem { font-weight: 700; }
+.etiqueta-sem.vigente   { color: var(--ok); }
+.etiqueta-sem.porvencer { color: var(--ambar); }
+.etiqueta-sem.vencida   { color: var(--rojo); }
+.etiqueta-sem.disputa   { color: var(--morado); }
+.etiqueta-sem.liquidada { color: var(--liquidada); }
+.tarjeta .aval { font-size: 12.5px; color: var(--gris); margin-top: 2px; }
+.puntos-exp { font-size: 12.5px; margin-top: 4px; color: var(--gris); letter-spacing: .3px; }
+.punto { display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  border: 1.5px solid var(--verde); margin-right: 3px; vertical-align: baseline; }
+.punto.lleno { background: var(--verde); }
+
+/* ── Detalle (P-3) ── */
+.volver { background: none; border: none; color: var(--verde-claro); font-weight: 700;
+  padding: 4px 0 10px; font-size: 14.5px; }
+details.bloque { border: 1px solid var(--borde); border-radius: 8px; margin-bottom: 9px; background: #FFF; }
+details.bloque summary { padding: 11px 12px; font-weight: 700; color: var(--verde);
+  cursor: pointer; list-style: none; }
+details.bloque summary::after { content: "▾"; float: right; color: var(--gris); }
+details.bloque[open] summary::after { content: "▴"; }
+details.bloque .cuerpo { padding: 0 12px 11px; }
+.dato { padding: 5px 0; border-top: 1px dashed var(--borde); font-size: 14.5px; }
+.dato .k { color: var(--gris); font-size: 12.5px; display: block; }
+.bitacora li { font-size: 13.5px; padding: 4px 0; border-top: 1px dashed var(--borde); list-style: none; }
+
+.doc-linea { display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0; border-top: 1px dashed var(--borde); font-size: 14.5px; }
+.doc-estado { font-weight: 700; font-size: 13px; }
+.doc-estado.Firmada, .doc-estado.Registrada { color: var(--ok); }
+.doc-estado.Pendiente, .doc-estado.Enviada { color: var(--ambar); }
+
+/* ── Vencimientos (P-4) ── */
+.grupo-semana { margin-bottom: 14px; }
+.grupo-semana h3 { font-size: 14px; color: var(--gris); margin-bottom: 6px; }
+
+/* ── Estado de carga y error ── */
+.estado { text-align: center; color: var(--gris); padding: 26px 10px; font-size: 14.5px; }
+.estado button { margin-top: 10px; padding: 9px 18px; border: 1.5px solid var(--verde);
+  border-radius: 8px; background: #FFF; color: var(--verde); font-weight: 700; }
+
+/* ── Navegación inferior (una mano) ── */
+nav.inferior {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+  display: flex; background: #FFF; border-top: 1.5px solid var(--borde);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+nav.inferior button {
+  flex: 1; background: none; border: none; padding: 9px 2px 10px;
+  font-size: 12.5px; color: var(--gris); font-weight: 600;
+}
+nav.inferior button .ico { display: block; font-size: 19px; line-height: 1.2; }
+nav.inferior button[aria-current="true"] { color: var(--verde); }
+nav.inferior button[aria-current="true"] .ico { color: var(--dorado); }
+
+/* ── Pantalla de acceso (P-0) ── */
+.acceso { max-width: 380px; margin: 0 auto; padding: 40px 22px; text-align: center; }
+.acceso .sello { font-family: Georgia, serif; font-size: 22px; font-weight: 700; color: var(--verde); }
+.acceso .sub { font-size: 13px; color: var(--gris); margin-bottom: 26px; }
+.acceso label { display: block; text-align: left; font-size: 13.5px; color: var(--gris); margin: 14px 0 4px; }
+.acceso input {
+  width: 100%; padding: 13px 12px; font-size: 17px; border: 1.5px solid var(--borde);
+  border-radius: 8px; text-align: center; letter-spacing: 1px;
+}
+.acceso input#codigo { letter-spacing: 8px; font-size: 22px; font-weight: 700; }
+.acceso button.principal {
+  width: 100%; margin-top: 18px; padding: 14px; background: var(--verde); color: #FFF;
+  border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+}
+.acceso .mensaje { margin-top: 14px; font-size: 14px; min-height: 20px; }
+.acceso .mensaje.error { color: var(--rojo); font-weight: 600; }
+.acceso .pie-despacho { margin-top: 40px; font-size: 11.5px; color: var(--gris); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .tarjeta, .ind { transition: background-color .12s ease; }
+  .tarjeta:active { background: var(--crema); }
+}
+@media (min-width: 480px) {
+  .saldo-principal .cifra { font-size: 46px; }
+}

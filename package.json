@@ -1,0 +1,12 @@
+{
+  "name": "sscae-panel-cliente",
+  "version": "2.0.0",
+  "description": "Panel del Cliente y canal de campo WhatsApp · Agroblindaje Inteligente™ · SSCAE",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "for f in netlify/functions/*.js public/*.js; do node --check \"$f\"; done"
+  }
+}
